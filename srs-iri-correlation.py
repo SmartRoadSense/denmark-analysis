@@ -48,6 +48,8 @@ iri_data['AVG IRI'] = iri_data.apply(lambda row: (row['IRI(1)'] + row['IRI(17)']
 
 print(iri_data.head())
 
+iri_data.to_csv('data/denmark-avgiri-data.csv', sep=';', encoding='utf-8')
+
 output = pd.DataFrame(columns=['distance', 'latitude', 'longitude', 'iri', 'ppe'])
 start = time.time()
 

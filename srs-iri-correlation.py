@@ -4,7 +4,7 @@ import geopy.distance
 import numpy as np
 import pandas as pd
 
-AGGREGATION_RADIUS = 10
+AGGREGATION_RADIUS = 20
 
 
 def get_IRI(data):
@@ -62,6 +62,7 @@ for index, row in iri_data.iterrows():
     completion_percentage = (iteration * 100)/len(iri_data)
     eta = str(datetime.timedelta(seconds=(seconds-elapsed_time)))
     print("\r{3}/{4} Time for completion {0} - ETA: {1} - Completion {2:.2f}%".format(str(datetime.timedelta(seconds=seconds)), eta, completion_percentage, index, len(iri_data)), end='')
+
 
 print('completed')
 output.to_csv('data/srs-iri-data.csv', sep=';', encoding='utf-8')

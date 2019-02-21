@@ -1,0 +1,7 @@
+version: '3'
+services:
+  web:
+    build: .
+    command: python srs-iri-correlation.py
+    volumes:
+      - .:/usr/src/app

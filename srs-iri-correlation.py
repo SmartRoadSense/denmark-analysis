@@ -53,9 +53,7 @@ iri_data.to_csv('data/denmark-avgiri-data.csv', sep=';', encoding='utf-8')
 output = pd.DataFrame(columns=['distance', 'latitude', 'longitude', 'iri', 'ppe'])
 start = time.time()
 
-
 for index, row in iri_data.iterrows():
-    print("{0}/{1}".format(index, len(iri_data)))
 
     ppe = get_PPE_aggregation(row[1], row[2], ppe_data)
 
@@ -70,8 +68,8 @@ for index, row in iri_data.iterrows():
     seconds = (elapsed_time) * (len(iri_data) / iteration)
     completion_percentage = (iteration * 100)/len(iri_data)
     eta = str(datetime.timedelta(seconds=(seconds-elapsed_time)))
-    print("Time for completion {0} - ETA: {1} - Completion {2:.2f}%".format(str(datetime.timedelta(seconds=seconds)), eta, completion_percentage))
+    print("\r{3}/{4} Time for completion {0} - ETA: {1} - Completion {2:.2f}%".format(str(datetime.timedelta(seconds=seconds)), eta, completion_percentage, index, len(iri_data)), end='')
 
-
+print('completed')
 output.to_csv('data/srs-iri-data.csv', sep=';', encoding='utf-8')
 print(np.corrcoef(output['iri'], output['ppe']))

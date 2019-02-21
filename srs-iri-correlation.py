@@ -38,17 +38,12 @@ def get_PPE_aggregation(lat, long, data):
 ppe_data = pd.read_csv("data/denmark-srs-data.csv", delimiter=";")
 iri_data = pd.read_csv("data/denmark-iri-data.csv", delimiter=";")
 
-print(ppe_data.head())
-
 iri_data = iri_data.filter(items=['Distance [m]', 'Latitude', 'Longitude', 'IRI(1)', 'IRI(17)'])
 iri_data['AVG IRI'] = iri_data.apply(lambda row: (row['IRI(1)'] + row['IRI(17)'])/2, axis=1)
-
-#iri_data_1 = iri_data.iloc[:round(len(iri_data)/2), :]
-#iri_data_2 = iri_data.iloc[round(len(iri_data)/2):, :]
-
-print(iri_data.head())
-
 iri_data.to_csv('data/denmark-avgiri-data.csv', sep=';', encoding='utf-8')
+
+print(ppe_data.head())
+print(iri_data.head())
 
 output = pd.DataFrame(columns=['distance', 'latitude', 'longitude', 'iri', 'ppe'])
 start = time.time()
@@ -56,14 +51,12 @@ start = time.time()
 for index, row in iri_data.iterrows():
 
     ppe = get_PPE_aggregation(row[1], row[2], ppe_data)
-
     output = output.append({'distance': row[0], 'latitude': row[1], 'longitude': row[2], 'iri': row[5], 'ppe': ppe},
                            ignore_index=True)
 
+    # ETA stats
     end = time.time()
     elapsed_time = end - start
-    #print("elapsed time {0} ".format(elapsed_time))
-
     iteration = index + 1
     seconds = (elapsed_time) * (len(iri_data) / iteration)
     completion_percentage = (iteration * 100)/len(iri_data)

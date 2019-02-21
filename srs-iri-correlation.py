@@ -1,7 +1,8 @@
-import pandas as pd
-import numpy as np
+import datetime
+import time
 import geopy.distance
-import time, datetime
+import numpy as np
+import pandas as pd
 
 AGGREGATION_RADIUS = 10
 
